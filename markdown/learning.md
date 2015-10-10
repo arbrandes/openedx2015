@@ -128,24 +128,3 @@ Note: In developing all this, we also came up with a couple of helper roles.
 One to deploy our XBlock properly, including dependencies, adding it to the
 LMS's installed apps, and configuring the nginx reverse proxy.  The other, to
 deploy courses from git.
-
-Let's see it all in action!
-
-
-<!-- .slide: data-background-iframe="http://localhost:4200/" data-background-size="contain" -->
-
-Note: We'll now deploy the hastexo XBlock and a demo course.
-
-- heat output-show openedx2015 --all
-- ssh -A ubuntu@[deploy_ip]
-- cd edx-configuration/playbooks
-- ansible-playbook -i openstack/inventory.py hastexo_xblock.yml \
-  -e hastexo_xblock_repo=https://github.com/hastexo/hastexo-xblock.git \
-  --tags edxapp_cfg \
-  --limit app_servers
-- ansible-playbook -i openstack/inventory.py run_role.yml \
-  -e role=git_add_course \
-  -e git_add_course_repo=git@github.com:hastexo/hx112-edx.git \
-  -e git_add_course_version=openedx2015 \
-  -e git_add_course_checkout_name=hx112-edx \
-  --limit app_servers
